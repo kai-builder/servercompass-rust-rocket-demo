@@ -9,14 +9,9 @@ FROM rust:1.83-slim AS builder
 
 WORKDIR /app
 
-# Copy manifests and create dummy main for dependency caching
-COPY Cargo.toml Cargo.lock ./
-RUN mkdir -p src && echo 'fn main() {}' > src/main.rs
-RUN cargo build --release 2>/dev/null || true
-
-# Copy real source and rebuild (only app code recompiles)
+# Copy everything and build in one step
 COPY . .
-RUN touch src/main.rs && cargo build --release
+RUN cargo build --release
 
 # ── Stage 2: runtime ───────────────────────────────────────────────────────
 FROM debian:bookworm-slim AS runtime

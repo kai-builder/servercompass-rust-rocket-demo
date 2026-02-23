@@ -5,7 +5,7 @@
 # Stage 2 (runtime): minimal debian:bookworm-slim with just the binary.
 
 # ── Stage 1: build ──────────────────────────────────────────────────────────
-FROM rust:1.83-slim AS builder
+FROM rust:latest AS builder
 
 WORKDIR /app
 
